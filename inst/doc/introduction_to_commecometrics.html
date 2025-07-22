@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>introduction_to_commecometrics</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">introduction_to_commecometrics</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(commecometrics)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div>
+<div id="overview" class="section level2">
+<h2>1. Overview</h2>
+<p>Ecometrics quantify the relationships between functional traits and
+environmental conditions at the community level. The
+<code>commecometrics</code> package provides tools for conducting
+ecometric analyses using trait data, species distributions, and
+environmental variables. It supports workflows for both continuous and
+categorical environmental variables, and includes utilities for fossil
+data integration and sensitivity analyses.</p>
+<p>This vignette introduces the main functions and workflows available
+in the package.</p>
+</div>
+<div id="data-loading" class="section level2">
+<h2>2. Data Loading</h2>
+<p>We use example data from an ecometric analysis of carnivoran
+carnassial tooth relative blade length (RBL) from Siciliano-Martina et
+al (2024). The following datasets are used to assess ecometric
+relationships:</p>
+<ul>
+<li><code>samplingPoints</code>: Contains environmental data
+(precipitation and vegetation categories) as well as geographic
+coordinates for each sampling point.</li>
+<li><code>traits</code>: Includes trait (RBL) measurements for each
+species, identified by taxon name.</li>
+<li><code>geography</code>: Provides species range maps (from the IUCN),
+used to assemble carnivoran communities at each sampling point.</li>
+</ul>
+<p>Note: To run this vignette locally with the full dataset, download
+and unzip the external data using the code below. The data is hosted on
+Figshare. This step is not run automatically to comply with CRAN
+policies.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">600</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://ndownloader.figshare.com/files/56228033&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data.zip&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">&quot;data.zip&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>samplingPoints <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sampling_points.csv&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">head</span>(samplingPoints)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>traits <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Data/traits.csv&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">head</span>(traits)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>geography <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">&quot;data/data_0.shp&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>geography<span class="sc">$</span>SCI_NAME <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, geography<span class="sc">$</span>SCI_NAME)</span></code></pre></div>
+</div>
+<div id="summarize-traits-by-sampling-point" class="section level2">
+<h2>3. Summarize Traits by Sampling Point</h2>
+<p>We begin by summarizing trait values (RBL) for each sampling
+location. This identifies where the species ranges overlap to assemble
+the communities and, by default, calculates the mean trait value
+(<code>summ_trait_1</code>) and the standard deviation
+(<code>summ_trait_2</code>) for each sampling point, along with the
+species richness (<code>richness</code>) per community. The mean and
+standard deviation are commonly used metrics in ecometric analyses.
+However, users can supply any custom summary metric functions if
+alternative descriptors are desired.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>traitsByPoint <span class="ot">&lt;-</span> <span class="fu">summarize_traits_by_point</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">points_df =</span> samplingPoints,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">trait_df =</span> traits,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">species_polygons =</span> geography,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">trait_column =</span> <span class="st">&quot;RBL&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">species_name_col =</span> <span class="st">&quot;SCI_NAME&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">continent =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="at">parallel =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="fu">head</span>(traitsByPoint[[<span class="dv">1</span>]])</span></code></pre></div>
+</div>
+<div id="ecometric-modeling" class="section level2">
+<h2>4. Ecometric Modeling</h2>
+<p>This section demonstrates how to build ecometric models using both
+quantitative and qualitative environmental variables. Each type of model
+links community-level trait distributions to environmental
+conditions.</p>
+<div id="quantitative-environmental-variables-precipitation" class="section level3">
+<h3>4.1 Quantitative Environmental Variables (Precipitation)</h3>
+<p>Now we model annual precipitation as a function of trait mean and
+standard deviation. We use the sampling points and apply a
+transformation (<code>log(x + 1)</code>) to the environmental variable
+(precipitation) to maintain normality, although this step is optional.
+The <code>inv_transform_fun</code> ensures that predictions can be
+back-transformed to the original units.</p>
+<p>To calculate community trait mean and standard deviation, we filter
+the data to include only communities with at least three species. After
+filtering, we retained 90.1% of the original sampling points for a total
+of 48,721 communities out of the original 54,090.</p>
+<p>This function also calculates the optimal number of bins for each
+trait metric (mean and standard deviation) using Scott’s rule. In this
+dataset, the mean (first trait summary metric) is divided into 94 bins,
+and the standard deviation (second trait summary metric) is divided into
+90 bins.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ecoModel <span class="ot">&lt;-</span> <span class="fu">ecometric_model</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">points_df =</span> traitsByPoint<span class="sc">$</span>points,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">env_var =</span> <span class="st">&quot;precip&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">transform_fun =</span> <span class="cf">function</span>(x) <span class="fu">log</span>(x <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">inv_transform_fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">min_species =</span> <span class="dv">3</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="assessing-the-model" class="section level3">
+<h3>4.2 Assessing the model</h3>
+<p>To evaluate the model, we can examine the relationship between
+community-level trait distributions (mean and standard deviation) and
+the environmental variable (precipitation) using the linear model fit.
+Here, we find a significant relationship (t = 311.1, p &lt; 2e-16),
+indicating that trait distributions explain substantial variation in
+precipitation.</p>
+<p>We can also assess the correlation between the predicted and observed
+precipitation using the Pearson’s Correlation Coefficient (R). In this
+case, the resulting R value of 0.815, corresponds to an R-squared of
+0.665, meaning the the model explains roughly 66.5% of the variance in
+precipitation.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">summary</span>(ecoModel<span class="sc">$</span>model)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">print</span>(ecoModel<span class="sc">$</span>correlation)</span></code></pre></div>
+</div>
+<div id="visualize-ecometric-space" class="section level3">
+<h3>4.3 Visualize Ecometric Space</h3>
+<p>Here, we visualize the ecometric space generated from the
+<code>ecoModel</code>. Communities are binned according to their trait
+values, mean on the x-axis and standard deviation on the y-axis. Each
+pixel represents at least one community with that combination of trait
+mean and standard deviation; in many cases, multiple communities fall
+within a single bin.</p>
+<p>The bins are color-coded by the environmental variable
+(precipitation), with colors representing the estimation of the maximum
+likelihood estimate of precipitation for the communities in each trait
+bin.</p>
+<p>Here, we see communities with higher trait variability (i.e., higher
+standard deviation on the y-axis) are often associated with greater
+precipitation. Given that RBL is an indicator of carnivoran diet, where
+higher values often reflect increased vertebrate prey consumption, this
+pattern suggests that communities in wetter environments exhibit greater
+dietary diversity.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>ecoPlot <span class="ot">&lt;-</span> <span class="fu">ecometric_space</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">model_out =</span> ecoModel,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">env_name =</span> <span class="st">&quot;Precipitation (log)&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">x_label =</span> <span class="st">&quot;Community mean&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">y_label =</span> <span class="st">&quot;Community standard deviation&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>) </span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="fu">print</span>(ecoPlot)</span></code></pre></div>
+</div>
+<div id="viewing-communities-per-bin" class="section level3">
+<h3>4.4. Viewing communities per bin</h3>
+<p>We can examine how many communities are assigned to each trait bin
+within found within the ecometric space. In the example below, we
+display a subset of the bin count matrix, focusing on bins near the
+center of the trait distribution.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>ecoModel<span class="sc">$</span>diagnostics<span class="sc">$</span>bin_counts[<span class="dv">35</span><span class="sc">:</span><span class="dv">45</span>, <span class="dv">26</span><span class="sc">:</span><span class="dv">37</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">head</span>(ecoModel<span class="sc">$</span>eco_space)</span></code></pre></div>
+</div>
+<div id="sensitivity-analysis" class="section level3">
+<h3>4.5 Sensitivity Analysis</h3>
+<p>To evaluate how varying sample sizes affect the sensitivity and
+transferability of the model, we can conduct a sensitivity analysis.
+This analysis repeatedly subsamples the data at different community
+sample sizes, ranging from 100 to 1000 in increments of 100
+(<code>sample_sizes = seq(100, 1000, 300)</code>), and evaluates model
+performance at each level. The results are visualized in four plots and
+summarized in accompanying tables. Each plot shows performance metrics
+across a range of community sample sizes (x-axis), based on repeated
+subsampling of the data.</p>
+<p>The four panels display the following metrics: A) Training
+correlation (how well the model fits the training data), B) Testing
+correlation (the model’s generalizability to new data), C) Training mean
+anomaly (the average prediction error within the training set), D)
+Testing mean anomaly (the average prediction error in the test set).</p>
+<p>In Panel A, we observe that training correlation remains relatively
+consistent across sample sizes, with ful stabilization occurring around
+800 communities. In panel B, the testing correlation becomes stable with
+roughly 700 communities. Panel C shows that the training prediction
+error decreases and stabilizates around 700 communities, while Panel D
+reveals that testing error declines and plateaus around 400
+communities.</p>
+<p>These plots help identify the minimum sample size needed for robust
+generalizable model performance. More detailed results can be examinined
+directly in the summary tables returned by the sensitivity analysis
+function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>sensitivityResults <span class="ot">&lt;-</span> <span class="fu">sensitivity_analysis</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">points_df =</span> traitsByPoint<span class="sc">$</span>points,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">env_var =</span> <span class="st">&quot;precip&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">sample_sizes =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">100</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">5</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="at">transform_fun =</span> <span class="cf">function</span>(x) <span class="fu">log</span>(x <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="at">parallel =</span> <span class="cn">FALSE</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">head</span>(sensitivityResults<span class="sc">$</span>combined_results)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="fu">print</span>(sensitivityResults<span class="sc">$</span>summary_results)</span></code></pre></div>
+</div>
+</div>
+<div id="qualitative-environmental-variables-vegetation" class="section level2">
+<h2>5. Qualitative Environmental Variables (Vegetation)</h2>
+<p>Alternatively, we can model the ecometric space using a categorical
+environmental variables. In this example, we use vegetation type,
+classifying communities into five categories: arctic, deciduous, desert,
+evergreen, grassland. Due to the slight difference in the available
+environmental data, filtering for communities with at least three
+species now retains 47,671 out of the original 52,306 communities. Using
+Scott’s Rule, the model identifies 82 bins for the trait mean and 85
+bins for the trait standard deviation as the optimal binning scheme.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">table</span>(samplingPoints<span class="sc">$</span>VegSimple)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>samplingPoints<span class="sc">$</span>VegSimple <span class="ot">&lt;-</span> <span class="fu">factor</span>(samplingPoints<span class="sc">$</span>VegSimple,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                   <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Arctic&quot;</span>, <span class="st">&quot;Deciduous&quot;</span>, <span class="st">&quot;Desert&quot;</span>, <span class="st">&quot;Evergreen&quot;</span>, <span class="st">&quot;Grassland&quot;</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>ecoModelQual <span class="ot">&lt;-</span> <span class="fu">ecometric_model_qual</span>(</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  <span class="at">points_df =</span> traitsByPoint<span class="sc">$</span>points,</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="at">category_col =</span> <span class="st">&quot;VegSimple&quot;</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>  <span class="at">min_species =</span> <span class="dv">3</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>)</span></code></pre></div>
+<div id="visualize-ecometric-space-1" class="section level3">
+<h3>5.1 Visualize Ecometric Space</h3>
+<p>We can similarily visualize this ecometric space</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>ecoPlotQual <span class="ot">&lt;-</span> <span class="fu">ecometric_space_qual</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">model_out =</span> ecoModelQual,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">x_label =</span> <span class="st">&quot;Community mean&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="at">y_label =</span> <span class="st">&quot;Community standard deviation&quot;</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>) </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="fu">print</span>(ecoPlotQual<span class="sc">$</span>ecometric_space_plot)  <span class="co"># Qualitative model</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="fu">print</span>(ecoPlotQual<span class="sc">$</span>probability_maps<span class="sc">$</span>Grassland)  <span class="co"># One of the category-specific maps</span></span></code></pre></div>
+</div>
+<div id="sensitivity-analysis-1" class="section level3">
+<h3>5.2. Sensitivity Analysis</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>sensitivityQual <span class="ot">&lt;-</span> <span class="fu">sensitivity_analysis_qual</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="at">points_df =</span> traitsByPoint<span class="sc">$</span>points,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">category_col =</span> <span class="st">&quot;VegSimple&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="at">sample_sizes =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">100</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">10</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="at">parallel =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="fu">print</span>(sensitivityQual<span class="sc">$</span>summary_results)</span></code></pre></div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>6. Conclusion</h2>
+<p>This vignette demonstrates the key steps in an ecometric workflow
+using <code>commecometrics</code>. Users can extend these examples to
+their own data, customizing the trait variable and environment as
+needed.</p>
+<p>For detailed help on each function, see the package documentation and
+individual function examples.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
