@@ -11,15 +11,15 @@
 #' @param match_nearest Logical; if TRUE, matches each fossil to the nearest modern point (default = TRUE).
 #' @param fossil_lon Name of the longitude column in `fossildata`. Required if \code{match_nearest = TRUE}.
 #' @param fossil_lat Name of the latitude column in `fossildata`. Required if \code{match_nearest = TRUE}.
-#' @param modern_id Name of the unique ID column in modern points (optional for metadata merging).
+#' @param modern_id Name of the unique ID column in modern points (e.g., "GlobalID").
 #' @param modern_lon Name of the longitude column in modern points. Required if \code{match_nearest = TRUE}.
 #' @param modern_lat Name of the latitude column in modern points. Required if \code{match_nearest = TRUE}.
-#' @param crs_proj Coordinate reference system for sf operations (default = EPSG:4326).
+#' @param crs_proj Coordinate reference system to use when converting fossil and modern data to sf format (default = EPSG:4326)
 #'
-#' @return A data frame (`fossildata`) updated with:
+#' @return A data frame (`fossildata`) with reconstructed environmental values and optional nearest modern point data. Includes the following additional columns:
 #' \describe{
-#'   \item{fossil_bin_1}{Assigned bin number for the first trait axis (based on first summary metric of trait distribution of fossil communities).}
-#'   \item{fossil_bin_2}{Assigned bin number for the second trait axis (based on second summary metric of trait distribution of fossil communities).}
+#'   \item{fossil_bin_1}{Numeric bin index for the first trait axis (based on first summary metric of trait distribution of fossil communities).}
+#'   \item{fossil_bin_2}{Numeric bin index for the second trait axis (based on second summary metric of trait distribution of fossil communities).}
 #'   \item{fossil_env_est}{Predicted environmental category based on trait bin.}
 #'   \item{fossil_prob_*}{Probability of each environmental category for the assigned bin.}
 #'   \item{nearest_modern_point}{(Optional) ID of the nearest modern sampling point (if \code{match_nearest = TRUE}).}
@@ -99,18 +99,18 @@ reconstruct_env_qual <- function(fossildata,
     sd <- fossildata$fossilsdc[i]
 
     if (!is.na(mb) && !is.na(sd)) {
-      pred_row <- eco_space %>% dplyr::filter(mbc == mb, sdc == sd)
+      pred_row <- eco_space %>% dplyr::filter(x == mb, y == sd)
 
       if (nrow(pred_row) >= 1) {
         predictions[[i]] <- pred_row[1, , drop = FALSE]
       } else {
-        empty <- tibble::tibble(mbc = mb, sdc = sd, env_est = NA)
+        empty <- tibble::tibble(x = mb, y = sd, env_est = NA)
         prob_cols <- grep("^prob_", names(eco_space), value = TRUE)
         for (col in prob_cols) empty[[col]] <- NA_real_
         predictions[[i]] <- empty
       }
     } else {
-      empty <- tibble::tibble(mbc = NA_integer_, sdc = NA_integer_, env_est = NA)
+      empty <- tibble::tibble(x = NA_integer_, y = NA_integer_, env_est = NA)
       prob_cols <- grep("^prob_", names(eco_space), value = TRUE)
       for (col in prob_cols) empty[[col]] <- NA_real_
       predictions[[i]] <- empty
